@@ -461,7 +461,7 @@ SOLIX_LABEL_2=Account Two${RESET}`);
 }
 
 async function showAccountsStatus() {
-    console.log(`\n${AQUA}━━━━━━━━━━━━━━━ Akun terditeksi ━━━━━━━━━━━━━━━${RESET}`);
+    console.log(`\n${CYAN}━━━━━━━━━━━━━━━ Akun terditeksi ━━━━━━━━━━━━━━━${RESET}`);
     console.log(`${BLUE}Telah di periksa 1 ${accounts.length} akun:${RESET}`);
     
     for (let i = 0; i < accounts.length; i++) {
@@ -474,7 +474,7 @@ async function showAccountsStatus() {
             console.log(`   Current proxy: ${account.currentProxy}`);
         }
     }
-    console.log(`${AQUA}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
+    console.log(`${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
 }
 
 async function main() {
