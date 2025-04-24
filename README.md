@@ -41,7 +41,6 @@
 3. Pastikan dengan baik susunan angkanya seperti di bawah ini, edit dengan perintah `nano .env`.
 
  ```
-	// .env
  SOLIX_EMAIL_1=user@example.com
  SOLIX_PASSWORD_1=*********
  SOLIX_LABEL_1=Account1
