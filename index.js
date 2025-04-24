@@ -29,21 +29,15 @@ const proxies = [];
 let currentProxyIndex = 0;
 
 function printBanner() {
-    console.log(`${CYAN}
-▄▀█ █ █▀█ █▀▄ █▀█ █▀█ █▀█ ∞
-█▀█ █ █▀▄ █▄▀ █▀▄ █▄█ █▀▀   
-┏━┓ ┏━┓         ┏━┓ ╔═╗             ╔═╗ ┏━┓__            ┏━┓
-┃ ┃ ┃ ┃ ┏━╻━━━┓ ┃ ┃ ┏━┓ ┏━╻━━╻━━━━┓ ┏━┓ ┃ ┏━┛  ┏━━━━╮ ╭━━╹ ┃
-┃ ┗━┛ ┃ ┃ ┏━┓ ┃ ┃ ┃ ┃ ┃ ┃ ┏━┓ ┏━┓ ┃ ┃ ┃ ┃ ┗━━┓ ┃ ┏━━┛ ┃ ━━ ┃
-┗━━━ ━┛ ┗━┛ ┗━┛ ┗━┛ ┗━┛ ┗━┛ ┗━┛ ┗━┛ ┗━┛ ┗━━━━┛ ┗━━━━┛ ╰━━━━┛
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- ${RESET}`);
+    console.log(`${CYAN}----------------------------------------${RESET}`);
+    console.log(`${CYAN}  Solix Depin Auto Bot - Airdrop Insiders  ${RESET}`);
+    console.log(`${CYAN}----------------------------------------${RESET}`);
 }
 
 async function loadProxies() {
     try {
         if (!fs.existsSync(PROXIES_FILE)) {
-            console.log(`${YELLOW}${RESET}`);
+            console.log(`${YELLOW}⚠️ No ${PROXIES_FILE} found. Running without proxies.${RESET}`);
             return [];
         }
 
@@ -52,10 +46,10 @@ async function loadProxies() {
             .map(line => line.trim())
             .filter(line => line && !line.startsWith('#'));
 
-        console.log(`${GREEN}${RESET}`);
+        console.log(`${GREEN}✅ Loaded ${proxyList.length} proxies from ${PROXIES_FILE}${RESET}`);
         return proxyList;
     } catch (error) {
-        console.error(`${RED}${RESET}`);
+        console.error(`${RED}❌ Error loading proxies: ${error.message}${RESET}`);
         return [];
     }
 }
@@ -83,7 +77,7 @@ function createProxyAgent(proxyString) {
         
         return new HttpsProxyAgent(formattedProxy);
     } catch (error) {
-        console.error(`${RED}${RESET}`);
+        console.error(`${RED}❌ Error creating proxy agent for ${proxyString}: ${error.message}${RESET}`);
         return null;
     }
 }
@@ -105,7 +99,7 @@ class AccountSession {
         const proxyString = getNextProxy();
         if (proxyString) {
             this.currentProxy = proxyString;
-            console.log(`${YELLOW}${RESET}`);
+            console.log(`${YELLOW}🔄 Rotating proxy for ${this.label}: ${this.currentProxy}${RESET}`);
             return createProxyAgent(proxyString);
         }
         return null;
@@ -139,8 +133,8 @@ class AccountSession {
 
     async login() {
         try {
-            console.log(`\n${CYAN}━━━━━━━━━━━━━━━ LOGIN (${this.label}) ━━━━━━━━━━━━━━━${RESET}`);
-            console.log(`${YELLOW}🔑 Berhasil login dengan akun: ${this.label}...${RESET}`);
+            console.log(`\n${CYAN}==================== LOGIN (${this.label}) ====================${RESET}`);
+            console.log(`${YELLOW}🔑 Logging in with account: ${this.label}...${RESET}`);
             
             if (!this.email || !this.password) {
                 throw new Error(`Missing credentials for account ${this.label}`);
@@ -157,7 +151,7 @@ class AccountSession {
                 this.token = response.data.data.accessToken;
                 this.userInfo = response.data.data.user;
                 
-                console.log(`${GREEN}✅ Berhasil login untuk ${this.label}${proxyInfo}${RESET}`);
+                console.log(`${GREEN}✅ Login successful for ${this.label}${proxyInfo}${RESET}`);
                 console.log(`${GREEN}👤 User Info:${RESET}`);
                 console.log(`${WHITE}   • User ID: ${this.userInfo._id}${RESET}`);
                 console.log(`${WHITE}   • Email: ${this.userInfo.email}${RESET}`);
@@ -169,18 +163,18 @@ class AccountSession {
                 try {
                     const payload = JSON.parse(Buffer.from(this.token.split('.')[1], 'base64').toString());
                     const expiryDate = new Date(payload.exp * 1000);
-                    console.log(`${YELLOW}🕒 Token kedaluarsa: ${expiryDate.toLocaleString()}${RESET}`);
+                    console.log(`${YELLOW}🕒 Token expires: ${expiryDate.toLocaleString()}${RESET}`);
                 } catch (e) {
                     console.log(`${YELLOW}⚠️ Could not parse token expiry: ${e.message}${RESET}`);
                 }
-                console.log(`${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
+                console.log(`${CYAN}===============================================${RESET}`);
                 return true;
             } else {
                 console.error(`${RED}Login response for ${this.label}:${RESET}`, response.data);
-                throw new Error('Login gagal - Invalid response format');
+                throw new Error('Login failed - Invalid response format');
             }
         } catch (error) {
-            console.error(`${RED}❌ Login gagal untuk ${this.label}: ${error.message}${RESET}`);
+            console.error(`${RED}❌ Login failed for ${this.label}: ${error.message}${RESET}`);
             if (error.response) {
                 console.error(`${RED}Error details:${RESET}`, error.response.data);
             }
@@ -190,20 +184,20 @@ class AccountSession {
 
     async checkAndClaimTasks() {
         try {
-            console.log(`\n${CYAN}━━━━━━━━━━━━━━━ TASKS (${this.label}) ━━━━━━━━━━━━━━━${RESET}`);
-            console.log(`${YELLOW}📋 Memeriksa task untuk ${this.label}...${RESET}`);
+            console.log(`\n${CYAN}==================== TASKS (${this.label}) ====================${RESET}`);
+            console.log(`${YELLOW}📋 Checking tasks for ${this.label}...${RESET}`);
 
             const tasks = await this.getTasks();
             if (!tasks || tasks.length === 0) {
-                console.log(`${WHITE}ℹ️ Tidak ada task berhasil untuk for ${this.label}${RESET}`);
-                console.log(`${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
+                console.log(`${WHITE}ℹ️ No tasks found for ${this.label}${RESET}`);
+                console.log(`${CYAN}===============================================${RESET}`);
                 return;
             }
             
-            console.log(`${GREEN}📝 Berhasil ${tasks.length} task untuk ${this.label}${RESET}`);
+            console.log(`${GREEN}📝 Found ${tasks.length} tasks for ${this.label}${RESET}`);
 
             for (const task of tasks) {
-                console.log(`\n${WHITE}▶️ Task: ${task.name} (${task.status}) - ${task.pointAmount} poin${RESET}`);
+                console.log(`\n${WHITE}▶️ Task: ${task.name} (${task.status}) - ${task.pointAmount} points${RESET}`);
                 
                 if (task.status === 'idle') {
                     console.log(`${YELLOW}🔄 Attempting to claim task: ${task.name}${RESET}`);
@@ -211,19 +205,19 @@ class AccountSession {
                 } else if (task.status === 'pending') {
                     console.log(`${YELLOW}⏳ Task is pending verification: ${task.name}${RESET}`);
                 } else if (task.status === 'claimed') {
-                    console.log(`${GREEN}✅ Task siap di klaim: ${task.name}${RESET}`);
+                    console.log(`${GREEN}✅ Task already claimed: ${task.name}${RESET}`);
                 }
             }
-            console.log(`${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
+            console.log(`${CYAN}===============================================${RESET}`);
             
         } catch (error) {
-            console.error(`${RED}❌ Error memeriksa task untuk ${this.label}: ${error.message}${RESET}`);
+            console.error(`${RED}❌ Error checking tasks for ${this.label}: ${error.message}${RESET}`);
             if (error.response) {
                 console.error(`${RED}Error details:${RESET}`, error.response.data);
             }
 
             if (error.response && error.response.status === 401) {
-                console.log(`${YELLOW}🔄 Token expired untuk ${this.label}, logging in again...${RESET}`);
+                console.log(`${YELLOW}🔄 Token expired for ${this.label}, logging in again...${RESET}`);
                 await this.login();
             }
         }
@@ -238,7 +232,7 @@ class AccountSession {
             
             return response.data.data || [];
         } catch (error) {
-            console.error(`${RED}❌ Error fetching tasks untuk ${this.label}: ${error.message}${RESET}`);
+            console.error(`${RED}❌ Error fetching tasks for ${this.label}: ${error.message}${RESET}`);
             throw error;
         }
     }
@@ -253,17 +247,17 @@ class AccountSession {
             }, config);
             
             if (response.data && response.data.result === 'success') {
-                console.log(`${GREEN}✅ Berhasil mengklaim task: ${taskId} untuk ${this.label}${proxyInfo}${RESET}`);
+                console.log(`${GREEN}✅ Successfully claimed task: ${taskId} for ${this.label}${proxyInfo}${RESET}`);
                 return true;
             } else {
-                console.log(`${YELLOW}⚠️ Tidak dapat mengklaim task: ${taskId} untuk ${this.label}${proxyInfo}${RESET}`);
+                console.log(`${YELLOW}⚠️ Could not claim task: ${taskId} for ${this.label}${proxyInfo}${RESET}`);
                 if (response.data) {
                     console.log('Response:', response.data);
                 }
                 return false;
             }
         } catch (error) {
-            console.error(`${RED}❌ Error mengklaim task ${taskId} for ${this.label}: ${error.message}${RESET}`);
+            console.error(`${RED}❌ Error claiming task ${taskId} for ${this.label}: ${error.message}${RESET}`);
             if (error.response && error.response.data) {
                 console.error(`${RED}Error details:${RESET}`, error.response.data);
             }
@@ -283,16 +277,16 @@ class AccountSession {
                 this.lastPointsUpdate = new Date();
                 
                 if (showDetailedInfo) {
-                    console.log(`\n${GREEN}💰 Informasi poin untuk ${this.label}${proxyInfo}:${RESET}`);
-                    console.log(`${WHITE}   • Total Poin: ${pointsData.total.toFixed(2)}${RESET}`);
-                    console.log(`${WHITE}   • 🌟 Total Earning Poin: ${pointsData.totalEarningPoint.toFixed(2)}${RESET}`);
-                    console.log(`${WHITE}   • 🔌 Internet Poin: ${pointsData.totalPointInternet.toFixed(2)}${RESET}`);
-                    console.log(`${WHITE}   • ✅ Task Poin: ${pointsData.totalPointTask.toFixed(2)}${RESET}`);
-                    console.log(`${WHITE}   • 👥 Referral Poin: ${pointsData.totalPointReferral.toFixed(2)}${RESET}`);
-                    console.log(`${WHITE}   • 🎁 Bonus Poin: ${pointsData.totalPointBonus.toFixed(2)}${RESET}`);
-                    console.log(`${WHITE}   • 📅 Poin hari ini: ${pointsData.todayPointEarned.toFixed(2)}${RESET}`);
+                    console.log(`\n${GREEN}💰 Points Information for ${this.label}${proxyInfo}:${RESET}`);
+                    console.log(`${WHITE}   • Total Points: ${pointsData.total.toFixed(2)}${RESET}`);
+                    console.log(`${WHITE}   • 🌟 Total Earning Points: ${pointsData.totalEarningPoint.toFixed(2)}${RESET}`);
+                    console.log(`${WHITE}   • 🔌 Internet Points: ${pointsData.totalPointInternet.toFixed(2)}${RESET}`);
+                    console.log(`${WHITE}   • ✅ Task Points: ${pointsData.totalPointTask.toFixed(2)}${RESET}`);
+                    console.log(`${WHITE}   • 👥 Referral Points: ${pointsData.totalPointReferral.toFixed(2)}${RESET}`);
+                    console.log(`${WHITE}   • 🎁 Bonus Points: ${pointsData.totalPointBonus.toFixed(2)}${RESET}`);
+                    console.log(`${WHITE}   • 📅 Today's Points: ${pointsData.todayPointEarned.toFixed(2)}${RESET}`);
                 } else {
-                    console.log(`${WHITE}💰 ${this.label}: Total Poin: ${pointsData.total.toFixed(2)}${proxyInfo}${RESET}`);
+                    console.log(`${WHITE}💰 ${this.label}: Total Points: ${pointsData.total.toFixed(2)}${proxyInfo}${RESET}`);
                 }
                 
                 return pointsData;
@@ -309,8 +303,8 @@ class AccountSession {
     }
 
     startConnectionQuality(intervalMinutes = DEFAULT_PING_INTERVAL) {
-        console.log(`\n${CYAN}━━━━━━━━━━━━━━━ PING KONEKSI (${this.label}) ━━━━━━━━━━━━━━━${RESET}`);
-        console.log(`${YELLOW}🔌 Memulai kualitas koneksi ping untuk ${this.label}...${RESET}`);
+        console.log(`\n${CYAN}=============== CONNECTION PINGS (${this.label}) ===============${RESET}`);
+        console.log(`${YELLOW}🔌 Starting connection quality pings for ${this.label}...${RESET}`);
 
         this.stopConnectionQuality();
         this.pingConnectionQuality();
@@ -333,18 +327,18 @@ class AccountSession {
             
             const now = new Date().toLocaleTimeString();
             if (response.status === 200) {
-                console.log(`${GREEN}[${now}] 📡 Koneksi ping berhasil untuk ${this.label}${proxyInfo}${RESET}`);
+                console.log(`${GREEN}[${now}] 📡 Connection ping successful for ${this.label}${proxyInfo}${RESET}`);
                 await this.getTotalPoints();
                 return true;
             } else {
-                console.log(`${YELLOW}[${now}] ⚠️ Koneksi ping gagal merespon untuk ${this.label}${proxyInfo}: ${response.status}${RESET}`);
+                console.log(`${YELLOW}[${now}] ⚠️ Connection ping received unexpected response for ${this.label}${proxyInfo}: ${response.status}${RESET}`);
                 return false;
             }
         } catch (error) {
-            console.error(`${RED}[${new Date().toLocaleTimeString()}] ❌ Koneksi ping gagal untuk ${this.label}: ${error.message}${RESET}`);
+            console.error(`${RED}[${new Date().toLocaleTimeString()}] ❌ Connection ping failed for ${this.label}: ${error.message}${RESET}`);
 
             if (error.response && error.response.status === 401) {
-                console.log(`${YELLOW}🔄 Token expired untuk ${this.label}, logging in again...${RESET}`);
+                console.log(`${YELLOW}🔄 Token expired for ${this.label}, logging in again...${RESET}`);
                 await this.login();
             }
             return false;
@@ -374,13 +368,13 @@ class AccountSession {
             }
             return false;
         } catch (error) {
-            console.error(`${RED}❌ Error gagal memulai akun ${this.label}: ${error.message}${RESET}`);
+            console.error(`${RED}❌ Error starting account ${this.label}: ${error.message}${RESET}`);
             return false;
         }
     }
 
     cleanup() {
-        console.log(`${YELLOW}🧹 Membersihkan akun ${this.label}...${RESET}`);
+        console.log(`${YELLOW}🧹 Cleaning up account ${this.label}...${RESET}`);
         this.stopConnectionQuality();
         this.stopTaskChecker();
     }
@@ -393,9 +387,9 @@ async function loadAccounts() {
         if (fs.existsSync(ACCOUNTS_FILE)) {
             const fileData = fs.readFileSync(ACCOUNTS_FILE, 'utf8');
             accountsData = JSON.parse(fileData);
-            console.log(`${GREEN}✅ memuat ${accountsData.length} dari akun ${ACCOUNTS_FILE}${RESET}`);
+            console.log(`${GREEN}✅ Loaded ${accountsData.length} accounts from ${ACCOUNTS_FILE}${RESET}`);
         } else {
-            console.log(`${YELLOW}⚠️ Tidak ${ACCOUNTS_FILE} berhasil, memeriksa .env untuk accounts${RESET}`);
+            console.log(`${YELLOW}⚠️ No ${ACCOUNTS_FILE} found, checking .env for accounts${RESET}`);
 
             const email = process.env.SOLIX_EMAIL;
             const password = process.env.SOLIX_PASSWORD;
@@ -423,16 +417,16 @@ async function loadAccounts() {
             }
             
             if (foundNumberedAccounts) {
-                console.log(`${GREEN}✅ Berhasil ${accountNumber-1} numbered accounts in .env file${RESET}`);
+                console.log(`${GREEN}✅ Found ${accountNumber-1} numbered accounts in .env file${RESET}`);
             }
 
             if (accountsData.length > 0) {
                 fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify(accountsData, null, 2));
-                console.log(`${GREEN}✅ Dibuat ${ACCOUNTS_FILE} with ${accountsData.length} accounts${RESET}`);
+                console.log(`${GREEN}✅ Created ${ACCOUNTS_FILE} with ${accountsData.length} accounts${RESET}`);
             } else {
                 fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify([], null, 2));
-                console.log(`${RED}${ACCOUNTS_FILE}${RESET}`);
-                console.log(`${YELLOW}Mohon add akun untuk ${ACCOUNTS_FILE} in this format:${RESET}`);
+                console.log(`${RED}❌ No accounts found. Created empty ${ACCOUNTS_FILE}${RESET}`);
+                console.log(`${YELLOW}Please add your accounts to ${ACCOUNTS_FILE} in this format:${RESET}`);
                 console.log(`${CYAN}[
   {
     "email": "your-email@example.com",
@@ -461,33 +455,33 @@ SOLIX_LABEL_2=Account Two${RESET}`);
 }
 
 async function showAccountsStatus() {
-    console.log(`\n${CYAN}━━━━━━━━━━━━━━━ Akun terditeksi ━━━━━━━━━━━━━━━${RESET}`);
-    console.log(`${BLUE}Telah di periksa 1 ${accounts.length} akun:${RESET}`);
+    console.log(`\n${MAGENTA}==================== ACCOUNTS SUMMARY ====================${RESET}`);
+    console.log(`${BLUE}Currently managing ${accounts.length} accounts:${RESET}`);
     
     for (let i = 0; i < accounts.length; i++) {
         const account = accounts[i];
         console.log(`${WHITE}${i + 1}. ${account.label} (${account.email})${RESET}`);
         if (account.lastPointsUpdate) {
-            console.log(`   Update selanjutnya: ${account.lastPointsUpdate.toLocaleString()}`);
+            console.log(`   Last updated: ${account.lastPointsUpdate.toLocaleString()}`);
         }
         if (account.currentProxy) {
             console.log(`   Current proxy: ${account.currentProxy}`);
         }
     }
-    console.log(`${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
+    console.log(`${MAGENTA}=======================================================${RESET}`);
 }
 
 async function main() {
     try {
         printBanner();
-        console.log(`${GREEN}🚀 Memulai Solix Depin Multi-Akun Bot...${RESET}`);
+        console.log(`${GREEN}🚀 Starting Solix Depin Multi-Account Bot...${RESET}`);
 
         const loadedProxies = await loadProxies();
         if (loadedProxies.length > 0) {
             proxies.push(...loadedProxies);
-            console.log(`${GREEN}${RESET}`);
+            console.log(`${GREEN}✅ Proxies loaded and ready for use${RESET}`);
         } else {
-            console.log(`${YELLOW}${RESET}`);
+            console.log(`${YELLOW}⚠️ No proxies loaded. Bot will run with direct connections.${RESET}`);
             console.log(`${YELLOW}Create a ${PROXIES_FILE} file with one proxy per line in any of these formats:${RESET}`);
             console.log(`${CYAN}http://username:password@host:port
 https://username:password@host:port
@@ -528,7 +522,7 @@ host:port${RESET}`);
 }
 
 function cleanup() {
-    console.log(`${YELLOW}🧹 Membersihkan semua akun...${RESET}`);
+    console.log(`${YELLOW}🧹 Cleaning up all accounts...${RESET}`);
     for (const account of accounts) {
         account.cleanup();
     }
