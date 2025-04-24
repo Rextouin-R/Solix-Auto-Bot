@@ -1,1 +1,35 @@
-
+{
+    "name": "solix-auto-bot",
+    "version": "1.0.0",
+    "description": "An automated bot for the Solix Depin dashboard that helps users claim tasks and earn points automatically",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/airdropinsiders/Solix-Auto-Bot.git"
+    },
+    "keywords": [
+      "solix",
+      "depin",
+      "bot",
+      "automation",
+      "crypto",
+      "airdrop"
+    ],
+    "author": "Airdrop Insiders",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/airdropinsiders/Solix-Auto-Bot/issues"
+    },
+    "homepage": "https://github.com/airdropinsiders/Solix-Auto-Bot#readme",
+    "dependencies": {
+      "axios": "^1.6.0",
+      "dotenv": "^16.3.1"
+    },
+    "engines": {
+      "node": ">=16.0.0"
+    }
+  }
