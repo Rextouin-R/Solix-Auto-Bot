@@ -60,7 +60,8 @@
     ```
     npm start
     ```
+ 
 	
 	
-	
-SOLIX Extension : https://dashboard.solixdepin.net/sign-up?ref=EKrz7Dw8
+### SOLIX Extension 
+: https://dashboard.solixdepin.net/sign-up?ref=EKrz7Dw8
