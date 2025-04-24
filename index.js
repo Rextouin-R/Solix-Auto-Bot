@@ -295,6 +295,14 @@ class AccountSession {
                     console.log(`${WHITE}   • 📅 Poin hari ini: ${pointsData.todayPointEarned.toFixed(2)}${RESET}`);
                 } else {
                     console.log(`${WHITE}⏳ Memeriksa ${this.label}: Total Poin: ${pointsData.total.toFixed(2)}${proxyInfo}${RESET}`);
+                    console.log(`${CYAN}
+                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
+                    console.log(`${WHITE} 
+                                                    █▀ █▀█ █░ █ ▀▄▀  █▄▄ █▀█ ▀█▀
+                                                    ▄█ █▄█ █▄ █ █░█  █▄█ █▄█ ░█░
+                    ${RESET}`);
+                    console.log(`${CYAN}
+                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
                 }
                 
                 return pointsData;
@@ -425,12 +433,12 @@ async function loadAccounts() {
             }
             
             if (foundNumberedAccounts) {
-                console.log(`${GREEN}✅ Nomor akun ${accountNumber-1} berhasil di  .env file${RESET}`);
+                console.log(`${GREEN}✅ ${accountNumber-1} terditeksi di  .env file${RESET}`);
             }
 
             if (accountsData.length > 0) {
                 fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify(accountsData, null, 2));
-                console.log(`${GREEN}✅ Berhasil ${ACCOUNTS_FILE} membuat ${accountsData.length} akun${RESET}`);
+                console.log(`${GREEN}✅ ${ACCOUNTS_FILE} berhasil membuat ${accountsData.length} akun${RESET}`);
             } else {
                 fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify([], null, 2));
                 console.log(`${RED}❌ Tidak ada akun yang berhasil dibuat ${ACCOUNTS_FILE}${RESET}`);
