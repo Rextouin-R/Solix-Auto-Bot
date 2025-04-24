@@ -36,7 +36,7 @@
 
 1. Login/register Solix, siapkan semua email yang kamu buat lalu edit `.env` nya.
 
-2. Sesuaikan nomor yang berurutan seperti `SOLIX_EMAIL_1` `SOLIX_PASSWORD_1` `SOLIX_LABEL_1=Account1` dan jika ada akun ke dua, maka ganti setiap nomornya menjadi dua.
+2. Sesuaikan nomor yang berurutan seperti `SOLIX_EMAIL_1` `SOLIX_PASSWORD_1` `SOLIX_LABEL_1=Account1` dan jika ada akun ke dua, maka ganti setiap angkanya menjadi dua.
 
 3. Pastikan dengan baik susunan angkanya seperti di bawah ini, edit dengan perintah `nano .env`.
 
