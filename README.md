@@ -34,8 +34,9 @@
    ```
 ### Persiapan untuk menjalankan
 
-1. Login/register Solix, siapkan semua email yang kamu buat lalu edit"getpoint?appid=" -> "authorization:" klik titik tiga di bagian kanan atas browser kalian,scroll ke bawah klik bagian mode developer. 
-2.Ambil has token di bagian "berear" , dan copy semua has "berear"nya.
+1. Login/register Solix, siapkan semua email yang kamu buat lalu edit `.env` nya.
+
+2. Sesuaikan nomor yang berurutan seperti `SOLIX_EMAIL_1` `SOLIX_PASSWORD_1` `SOLIX_LABEL_1=Account1` dan seterusnya.
 3. Buka file `Dawn-Validator-bot` edit berkas `accounts.js isi bagian "email" dengan akun DAWN kalian dan paste bearer tokennya di bagian "token1" atau "token2", seperti contoh berkasnya.
 	```
 	// .env
