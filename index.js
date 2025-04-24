@@ -295,14 +295,9 @@ class AccountSession {
                     console.log(`${WHITE}   • 📅 Poin hari ini: ${pointsData.todayPointEarned.toFixed(2)}${RESET}`);
                 } else {
                     console.log(`${WHITE}⏳ Memeriksa ${this.label}: Total Poin: ${pointsData.total.toFixed(2)}${proxyInfo}${RESET}`);
-                    console.log(`${CYAN}
-                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
-                    console.log(`${WHITE} 
-                                                    █▀ █▀█ █░ █ ▀▄▀  █▄▄ █▀█ ▀█▀
-                                                    ▄█ █▄█ █▄ █ █░█  █▄█ █▄█ ░█░
-                    ${RESET}`);
-                    console.log(`${CYAN}
-                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
+console.log(`${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━SOLIX━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}`);
+                    
+                    
                 }
                 
                 return pointsData;
