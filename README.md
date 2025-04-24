@@ -1,7 +1,7 @@
 # Join Telegram  ♾︎ 
 [![Static Badge](https://img.shields.io/badge/Telegram-Airdrop◾unlimited-Link?style=for-the-badge&logo=Telegram&logoColor=white&logoSize=auto&color=blue)](https://t.me/UNLXairdop)
 
-# SOLIX Extension automatic claim
+# SOLIX Extention automatic claim
 ⚠️ Kestabilan jaringan sangat berpengaruh untuk progres
 ## Tools by airdropinsiders
 
