@@ -36,32 +36,32 @@
 
 1. Login/register Solix, siapkan semua email yang kamu buat lalu edit `.env` nya.
 
-2. Sesuaikan nomor yang berurutan seperti `SOLIX_EMAIL_1` `SOLIX_PASSWORD_1` `SOLIX_LABEL_1=Account1` dan seterusnya.
-3. Buka file `Dawn-Validator-bot` edit berkas `accounts.js isi bagian "email" dengan akun DAWN kalian dan paste bearer tokennya di bagian "token1" atau "token2", seperti contoh berkasnya.
+2. Sesuaikan nomor yang berurutan seperti `SOLIX_EMAIL_1` `SOLIX_PASSWORD_1` `SOLIX_LABEL_1=Account1` dan jika ada akun ke dua, maka ganti setiap nomornya menjadi dua.
+
+3. Pastikan dengan baik susunan angkanya seperti di bawah ini, edit dengan perintah `nano .env`.
 	```
 	// .env
 	module.exports = [
-		{ email: "user1@example.com", token: "token1" },
-		{ email: "user2@example.com", token: "token2" },
-		// Add more accounts as needed
+ SOLIX_EMAIL_1=user@example.com
+ SOLIX_PASSWORD_1=*********
+ SOLIX_LABEL_1=Account1
+
+ SOLIX_EMAIL_2=user@example.com
+ SOLIX_PASSWORD_2=*********
+ SOLIX_LABEL_2=Account2
+
+ SOLIX_EMAIL_3=user@example.com
+ SOLIX_PASSWORD_3=*********
+ SOLIX_LABEL_3=Account3
 	];
 	```
-4. Edit berkas `config.js`. dan jika tidak ingin menggunakan proxy biarkan "false".
-	```
-	// config.js
-	module.exports = {
-	    useProxy: false, // biarkan false jika tidak ingin menggunakan proxy
-	    minDelay: 3, // 
-	    maxDelay: 10, // 
-	    restartDelay: 241, // 
-	    accountDelay: 121, //
-	};
-	```
+4. Periksa ulang dengan baik, lalu save dengan perintah `CTRL+x+y` lalu enter.
+
 5. Untuk menjalankan scriptnya, ketikan perintah :
     ```
-    node index.js
+    npm start
     ```
 	
 	
 	
-Dawn Validator Extension : https://chromewebstore.google.com/detail/dawn-validator-chrome-ext/fpdkjdnhkakefebpekbdhillbhonfjjp?authuser=0&hl=en
+SOLIX Extension : https://dashboard.solixdepin.net/sign-up?ref=EKrz7Dw8
