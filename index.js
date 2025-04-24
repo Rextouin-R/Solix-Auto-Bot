@@ -489,12 +489,9 @@ async function main() {
             proxies.push(...loadedProxies);
             console.log(`${GREEN}✅ Proxies loaded and ready for use${RESET}`);
         } else {
-            console.log(`${YELLOW}⚠️ No proxies loaded. Bot will run with direct connections.${RESET}`);
-            console.log(`${YELLOW}Create a ${PROXIES_FILE} file with one proxy per line in any of these formats:${RESET}`);
-            console.log(`${CYAN}http://username:password@host:port
-https://username:password@host:port
-username:password@host:port
-host:port${RESET}`);
+            console.log(`${YELLOW}${RESET}`);
+            console.log(`${YELLOW}${RESET}`);
+            console.log(`${CYAN}${RESET}`);
         }
 
         const accountsData = await loadAccounts();
