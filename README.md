@@ -41,7 +41,7 @@
 3. Pastikan dengan baik susunan angkanya seperti di bawah ini, edit dengan perintah `nano .env`.
 	```
 	// .env
-	module.exports = [
+ 
  SOLIX_EMAIL_1=user@example.com
  SOLIX_PASSWORD_1=*********
  SOLIX_LABEL_1=Account1
@@ -53,7 +53,6 @@
  SOLIX_EMAIL_3=user@example.com
  SOLIX_PASSWORD_3=*********
  SOLIX_LABEL_3=Account3
-	];
 	```
 4. Periksa ulang dengan baik, lalu save dengan perintah `CTRL+x+y` lalu enter.
 
