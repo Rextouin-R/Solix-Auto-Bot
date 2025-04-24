@@ -4,7 +4,7 @@ const fs = require('fs');
 const { HttpsProxyAgent } = require('https-proxy-agent');
 
 const BASE_URL = 'https://api.solixdepin.net/api';
-const LOGIN_URL = `${BASE_URL}/auth/login-password`;
+const LOGIN_URL = `${BASE_URL}/auth/login-bearer`;
 const TASKS_URL = `${BASE_URL}/task/get-user-task`;
 const CLAIM_TASK_URL = `${BASE_URL}/task/claim-task`;
 const TOTAL_POINT_URL = `${BASE_URL}/point/get-total-point`;
@@ -34,10 +34,10 @@ function loadAccounts() {
     const accountNumbers = emailKeys.map(key => key.replace('SOLIX_EMAIL_', ''));
     
     if (accountNumbers.length === 0) {
-        if (process.env.SOLIX_EMAIL && process.env.SOLIX_PASSWORD) {
+        if (process.env.SOLIX_EMAIL && process.env.SOLIX_BEARER) {
             accounts.push({
                 email: process.env.SOLIX_EMAIL,
-                password: process.env.SOLIX_PASSWORD,
+                bearer: process.env.SOLIX_BEARER,
                 label: "Default Account",
                 token: null,
                 userInfo: null
@@ -52,13 +52,13 @@ function loadAccounts() {
 
     accountNumbers.forEach(num => {
         const email = process.env[`SOLIX_EMAIL_${num}`];
-        const password = process.env[`SOLIX_PASSWORD_${num}`];
+        const bearer = process.env[`SOLIX_BEARER_${num}`];
         const label = process.env[`SOLIX_LABEL_${num}`] || `Account${num}`;
         
-        if (email && password) {
+        if (email && bearer) {
             accounts.push({
                 email,
-                password,
+                bearer,
                 label,
                 token: null,
                 userInfo: null
@@ -159,7 +159,7 @@ async function login(accountIndex) {
         
         const response = await axiosInstance.post(LOGIN_URL, {
             email: account.email,
-            password: account.password
+            bearer: account.bearer
         });
         
         if (response.data && response.data.result === 'success' && response.data.data.accessToken) {
