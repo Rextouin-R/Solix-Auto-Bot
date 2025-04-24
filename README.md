@@ -54,7 +54,7 @@
  SOLIX_LABEL_3=Account3
 
  ```
-4. Periksa ulang dengan baik, lalu save dengan perintah `CTRL+x+y` lalu enter.
+4. Periksa ulang dengan baik setiap susunan angkanya, lalu simpan dengan perintah `CTRL+x+y` lalu enter.
 
 5. Untuk menjalankan scriptnya, ketikan perintah :
     ```
