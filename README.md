@@ -39,9 +39,9 @@
 2. Sesuaikan nomor yang berurutan seperti `SOLIX_EMAIL_1` `SOLIX_PASSWORD_1` `SOLIX_LABEL_1=Account1` dan jika ada akun ke dua, maka ganti setiap nomornya menjadi dua.
 
 3. Pastikan dengan baik susunan angkanya seperti di bawah ini, edit dengan perintah `nano .env`.
-	```
+
+ ```
 	// .env
- 
  SOLIX_EMAIL_1=user@example.com
  SOLIX_PASSWORD_1=*********
  SOLIX_LABEL_1=Account1
@@ -53,7 +53,8 @@
  SOLIX_EMAIL_3=user@example.com
  SOLIX_PASSWORD_3=*********
  SOLIX_LABEL_3=Account3
-	```
+
+ ```
 4. Periksa ulang dengan baik, lalu save dengan perintah `CTRL+x+y` lalu enter.
 
 5. Untuk menjalankan scriptnya, ketikan perintah :
